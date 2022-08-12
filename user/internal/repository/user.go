@@ -42,20 +42,6 @@ func BuildUser(user User) *service.UserModel {
 	return &userModel
 }
 
-func (user *User) UserCreate(req *service.UserRequest) error {
-	if exist := user.CheckUserExist(req); exist {
-		return nil
-	}
-
-	userData := User{
-		UserName: req.UserName,
-		NickName: req.NickName,
-	}
-	user.SetPassword(req.Password)
-	err := DB.Create(&userData).Error
-	return err
-}
-
 func (user *User) SetPassword(password string) error {
 	fromPassword, err := bcrypt.GenerateFromPassword([]byte(password), PasswordCost)
 	if err != nil {
@@ -63,6 +49,21 @@ func (user *User) SetPassword(password string) error {
 	}
 	user.PasswordDigest = string(fromPassword)
 	return nil
+}
+
+func (*User) UserCreate(req *service.UserRequest) error {
+	var user User
+	if exist := user.CheckUserExist(req); exist {
+		return nil
+	}
+
+	user = User{
+		UserName: req.UserName,
+		NickName: req.NickName,
+	}
+	user.SetPassword(req.Password)
+	err := DB.Create(&user).Error
+	return err
 }
 
 func (user *User) CheckPassword(password string) bool {

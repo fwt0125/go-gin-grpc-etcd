@@ -23,7 +23,7 @@ func GenerateToken(userId uint) (string, error) {
 			Issuer:    "38384-SearchEngine",
 		},
 	}
-	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodES256, claims)
+	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	token, err := tokenClaims.SignedString(jwtSecret)
 	return token, err
 }

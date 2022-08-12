@@ -9,5 +9,7 @@ message UserModel {
     string UserName = 2;
     //@inject_tag: json "nick_name"
     string NickName = 3;
+    //&inject_tag :json "password_digest"
+    string PasswordDigest = 4;
 }
 

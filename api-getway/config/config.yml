@@ -1,0 +1,11 @@
+server:
+  domain: api-gateway
+  port: :3000
+  jwtSecret: asdfasdfasf
+  version: 1.0
+
+etcd:
+  address: 127.0.0.1:2379
+
+user:
+  address: 127.0.0.1:10000
